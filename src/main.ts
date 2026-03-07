@@ -1,3 +1,4 @@
+import './app/components/data-grid/grid-setup';
 import 'zone.js';
 import { bootstrapApplication } from '@angular/platform-browser';
 
