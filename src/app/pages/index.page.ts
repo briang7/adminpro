@@ -1,11 +1,14 @@
-import { Component } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
   standalone: true,
-  template: `
-    <div class="min-h-screen bg-slate-900 text-white flex items-center justify-center">
-      <h1 class="text-4xl font-bold">AdminPro</h1>
-    </div>
-  `,
+  template: '',
 })
-export default class HomePage {}
+export default class IndexPage implements OnInit {
+  private router = inject(Router);
+
+  ngOnInit() {
+    this.router.navigate(['/dashboard']);
+  }
+}
