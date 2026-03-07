@@ -1,0 +1,15 @@
+services:
+  postgres:
+    image: postgres:16-alpine
+    container_name: adminpro-db
+    ports:
+      - "5437:5432"
+    environment:
+      POSTGRES_DB: adminpro
+      POSTGRES_USER: adminpro
+      POSTGRES_PASSWORD: adminpro_dev
+    volumes:
+      - adminpro_pgdata:/var/lib/postgresql/data
+
+volumes:
+  adminpro_pgdata:
