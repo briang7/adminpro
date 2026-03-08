@@ -1,26 +1,39 @@
-# __PROJECT_TITLE__
+# AdminPro - Enterprise Back-Office Dashboard
 
-This project was generated with [Analog](https://analogjs.org), the fullstack meta-framework for Angular.
+Full-stack enterprise dashboard built with Analog (Angular meta-framework), AG Grid Enterprise, NgRx SignalStore, Chart.js, and Drizzle ORM.
 
-## Setup
+## Tech Stack
 
-Run `npm install` to install the application dependencies.
+- **Frontend:** Analog v2, Angular 19, Tailwind CSS 4, AG Grid Enterprise, Chart.js/ng2-charts, Angular CDK
+- **State:** NgRx SignalStore
+- **Backend:** Analog/Nitro server routes (h3)
+- **Database:** PostgreSQL via Drizzle ORM
+- **Auth:** JWT with httpOnly cookies
 
-## Development
+## Getting Started
 
-Run `npm start` for a dev server. Navigate to `http://localhost:5173/`. The application automatically reloads if you change any of the source files.
+```bash
+# Install dependencies
+npm install --legacy-peer-deps
 
-## Build
+# Start PostgreSQL
+docker compose up -d
 
-Run `npm run build` to build the client/server project. The client build artifacts are located in the `dist/analog/public` directory. The server for the API build artifacts are located in the `dist/analog/server` directory.
+# Push schema & seed data
+npm run db:push
+npm run db:seed
 
-## Test
+# Start dev server
+npm run dev
+```
 
-Run `npm run test` to run unit tests with [Vitest](https://vitest.dev).
+Visit http://localhost:4201
 
-## Community
+## Demo Accounts
 
-- Visit and Star the [GitHub Repo](https://github.com/analogjs/analog)
-- Join the [Discord](https://chat.analogjs.org)
-- Follow us on [Twitter](https://twitter.com/analogjs)
-- Become a [Sponsor](https://github.com/sponsors/brandonroberts)
+| Role | Email | Password |
+|------|-------|----------|
+| Admin | admin@adminpro.dev | Demo123! |
+| Manager | manager@adminpro.dev | Demo123! |
+| Editor | editor@adminpro.dev | Demo123! |
+| Viewer | viewer@adminpro.dev | Demo123! |

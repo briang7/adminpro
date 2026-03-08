@@ -1,0 +1,15 @@
+{
+  "hosting": {
+    "public": ".output/public",
+    "ignore": ["firebase.json", "**/.*", "**/node_modules/**"],
+    "rewrites": [
+      {
+        "source": "**",
+        "run": {
+          "serviceId": "adminpro-api",
+          "region": "us-central1"
+        }
+      }
+    ]
+  }
+}
