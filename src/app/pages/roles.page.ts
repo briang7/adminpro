@@ -1,13 +1,7 @@
 import { Component, inject, signal, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { AppLayoutComponent } from '../components/layout/app-layout.component';
-import { RouteMeta } from '@analogjs/router';
-import { authGuard } from '../guards/auth.guard';
 import { firstValueFrom } from 'rxjs';
-
-export const routeMeta: RouteMeta = {
-  canActivate: [authGuard],
-};
 
 interface RoleWithPermissions {
   id: number;

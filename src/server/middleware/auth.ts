@@ -1,19 +1,17 @@
-import { defineEventHandler, createError, getRequestURL } from 'h3';
+import { defineEventHandler, getRequestURL } from 'h3';
 import { getAuthFromEvent } from '../utils/auth';
 
 export default defineEventHandler((event) => {
   const url = getRequestURL(event);
   const path = url.pathname;
 
-  // Skip auth for login, logout, and non-API routes
-  if (!path.startsWith('/api/v1/') || path.includes('/auth/login') || path.includes('/auth/logout')) {
+  // Only parse auth for API routes
+  if (!path.startsWith('/api/v1/')) {
     return;
   }
 
   const auth = getAuthFromEvent(event);
-  if (!auth) {
-    throw createError({ statusCode: 401, statusMessage: 'Not authenticated' });
+  if (auth) {
+    event.context['auth'] = auth;
   }
-
-  event.context['auth'] = auth;
 });

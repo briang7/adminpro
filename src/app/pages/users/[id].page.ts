@@ -3,13 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AppLayoutComponent } from '../../components/layout/app-layout.component';
-import { RouteMeta } from '@analogjs/router';
-import { authGuard } from '../../guards/auth.guard';
 import { firstValueFrom } from 'rxjs';
-
-export const routeMeta: RouteMeta = {
-  canActivate: [authGuard],
-};
 
 interface Role {
   id: number;

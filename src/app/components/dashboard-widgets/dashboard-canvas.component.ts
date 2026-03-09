@@ -19,11 +19,28 @@ const CHART_FIELD_MAP: Record<string, { labelKey: string; valueKey: string }> = 
 };
 
 /** Map widget type to Chart.js chart type */
-function toChartType(type: string): 'line' | 'bar' | 'pie' {
+function toChartType(type: string): 'line' | 'bar' | 'pie' | 'doughnut' {
   if (type === 'line-chart') return 'line';
   if (type === 'bar-chart') return 'bar';
+  if (type === 'pie-chart') return 'doughnut';
   return 'pie';
 }
+
+/** Mock change percentages for KPI widgets */
+const KPI_CHANGE_MAP: Record<string, number> = {
+  totalRevenue: 12.5,
+  activeCustomers: 8.3,
+  recentOrders: -3.2,
+  avgOrderValue: 5.7,
+};
+
+/** Accent colors for KPI widgets */
+const KPI_COLOR_MAP: Record<string, string> = {
+  totalRevenue: '#3b82f6',
+  activeCustomers: '#10b981',
+  recentOrders: '#f59e0b',
+  avgOrderValue: '#8b5cf6',
+};
 
 let nextWidgetId = 1;
 
@@ -81,6 +98,8 @@ let nextWidgetId = 1;
               [title]="widget.title"
               [value]="getKpiValue(widget)"
               [format]="widget.config['format'] || 'number'"
+              [changePercent]="getKpiChange(widget)"
+              [color]="getKpiColor(widget)"
             />
           } @else {
             <div [style.height]="getChartHeight(widget)">
@@ -130,6 +149,16 @@ export class DashboardCanvasComponent {
     if (!stats) return 0;
     const metric = widget.config['metric'];
     return stats.kpis?.[metric] ?? 0;
+  }
+
+  getKpiChange(widget: DashboardWidget): number | null {
+    const metric = widget.config['metric'];
+    return KPI_CHANGE_MAP[metric] ?? null;
+  }
+
+  getKpiColor(widget: DashboardWidget): string {
+    const metric = widget.config['metric'];
+    return KPI_COLOR_MAP[metric] ?? '#3b82f6';
   }
 
   getChartLabels(widget: DashboardWidget): string[] {

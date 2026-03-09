@@ -1,7 +1,7 @@
 import jwt from 'jsonwebtoken';
 import { compareSync } from 'bcryptjs';
 import type { H3Event } from 'h3';
-import { getCookie, setCookie, deleteCookie } from 'h3';
+import { getCookie, setCookie, deleteCookie, createError } from 'h3';
 
 const JWT_SECRET = process.env['JWT_SECRET'] || 'fallback-dev-secret';
 const TOKEN_NAME = 'adminpro_token';
@@ -43,6 +43,14 @@ export function getAuthFromEvent(event: H3Event): JwtPayload | null {
   const token = getCookie(event, TOKEN_NAME);
   if (!token) return null;
   return verifyToken(token);
+}
+
+export function requireAuth(event: H3Event): JwtPayload {
+  const auth = event.context['auth'] as JwtPayload | undefined;
+  if (!auth) {
+    throw createError({ statusCode: 401, statusMessage: 'Not authenticated' });
+  }
+  return auth;
 }
 
 export function verifyPassword(plain: string, hash: string): boolean {

@@ -12,13 +12,7 @@ import {
   colorSchemeDark,
 } from 'ag-grid-community';
 import { AppLayoutComponent } from '../components/layout/app-layout.component';
-import { RouteMeta } from '@analogjs/router';
-import { authGuard } from '../guards/auth.guard';
 import { firstValueFrom } from 'rxjs';
-
-export const routeMeta: RouteMeta = {
-  canActivate: [authGuard],
-};
 
 @Component({
   standalone: true,

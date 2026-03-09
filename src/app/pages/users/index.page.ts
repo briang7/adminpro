@@ -1,4 +1,5 @@
-import { Component, inject, signal } from '@angular/core';
+import { Component, inject, OnInit, PLATFORM_ID, signal } from '@angular/core';
+import { isPlatformBrowser } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
 import { AgGridAngular } from 'ag-grid-angular';
@@ -12,13 +13,7 @@ import {
   colorSchemeDark,
 } from 'ag-grid-community';
 import { AppLayoutComponent } from '../../components/layout/app-layout.component';
-import { RouteMeta } from '@analogjs/router';
-import { authGuard } from '../../guards/auth.guard';
 import { firstValueFrom } from 'rxjs';
-
-export const routeMeta: RouteMeta = {
-  canActivate: [authGuard],
-};
 
 interface Role {
   id: number;
@@ -40,17 +35,23 @@ interface Role {
             New User
           </button>
         </div>
-        <ag-grid-angular
-          style="height: 75vh; width: 100%;"
-          [theme]="theme"
-          [columnDefs]="columnDefs"
-          [defaultColDef]="defaultColDef"
-          [rowModelType]="'serverSide'"
-          [pagination]="true"
-          [paginationPageSize]="50"
-          [cacheBlockSize]="50"
-          (gridReady)="onGridReady($event)"
-        />
+        @if (isBrowser()) {
+          <ag-grid-angular
+            style="height: 75vh; width: 100%;"
+            [theme]="theme"
+            [columnDefs]="columnDefs"
+            [defaultColDef]="defaultColDef"
+            [rowModelType]="'serverSide'"
+            [pagination]="true"
+            [paginationPageSize]="50"
+            [cacheBlockSize]="50"
+            (gridReady)="onGridReady($event)"
+          />
+        } @else {
+          <div class="h-[75vh] bg-slate-800/50 rounded-xl animate-pulse flex items-center justify-center">
+            <p class="text-slate-500">Loading data grid...</p>
+          </div>
+        }
       </div>
 
       <!-- Slide-over Panel -->
@@ -130,9 +131,12 @@ interface Role {
     }
   `],
 })
-export default class UsersPage {
+export default class UsersPage implements OnInit {
   private http = inject(HttpClient);
+  private platformId = inject(PLATFORM_ID);
   private gridApi!: GridApi;
+
+  isBrowser = signal(false);
 
   theme = themeQuartz.withPart(colorSchemeDark);
   panelOpen = signal(false);
@@ -193,6 +197,10 @@ export default class UsersPage {
 
   constructor() {
     this.loadRoles();
+  }
+
+  ngOnInit(): void {
+    this.isBrowser.set(isPlatformBrowser(this.platformId));
   }
 
   onGridReady(event: GridReadyEvent): void {

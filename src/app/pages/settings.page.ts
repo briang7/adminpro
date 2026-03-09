@@ -1,12 +1,10 @@
 import { Component, inject } from '@angular/core';
 import { RouteMeta } from '@analogjs/router';
-import { authGuard } from '../guards/auth.guard';
 import { AuthStore } from '../stores/auth.store';
 import { UIStore } from '../stores/ui.store';
 import { AppLayoutComponent } from '../components/layout/app-layout.component';
 
 export const routeMeta: RouteMeta = {
-  canActivate: [authGuard],
   title: 'Settings | AdminPro',
 };
 
