@@ -20,6 +20,9 @@ export default defineConfig(({ mode }) => ({
     analog({
       ssr: true,
       apiPrefix: 'api',
+      prerender: {
+        routes: [],
+      },
     }),
   ],
   test: {

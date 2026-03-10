@@ -1,6 +1,6 @@
 {
   "hosting": {
-    "public": ".output/public",
+    "public": "dist/analog/public",
     "ignore": ["firebase.json", "**/.*", "**/node_modules/**"],
     "rewrites": [
       {
