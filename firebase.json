@@ -2,7 +2,22 @@
   "hosting": {
     "public": "dist/analog/public",
     "ignore": ["firebase.json", "**/.*", "**/node_modules/**"],
+    "headers": [
+      {
+        "source": "/assets/**",
+        "headers": [
+          { "key": "Cache-Control", "value": "public, max-age=31536000, immutable" }
+        ]
+      }
+    ],
     "rewrites": [
+      {
+        "source": "/api/**",
+        "run": {
+          "serviceId": "adminpro-api",
+          "region": "us-central1"
+        }
+      },
       {
         "source": "**",
         "run": {
